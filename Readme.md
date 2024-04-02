@@ -125,4 +125,6 @@ ou
 
 À la fin du tp, vous ferez une présentation intermédiaire de votre compilateur, de l'ordre de 5 minutes, à l'enseignant qui vous encadre en tp.
 
-Avant le 27 avril 2023, sous la forme d'un lien vers un dépot git, vous devez envoyer un petit compte-rendu avec des exemples bien choisis de génération de code et l'ensemble de vos fichiers source à l'enseignant qui vous encadre en tp (Stephane.Talbot@univ-smb.fr / Francois.Boussion@univ-smb.fr).
+Avant le 27 avril 2024, vous enverrez par mail (mettre **INFO805 - compilation** dans le sujet du mail) à l'enseignant qui vous encadre (Stephane.Talbot@univ-smb.fr) votre tp, sous la forme d'un lien vers un dépot git, dont la branche principale devra comprendre un petit compte-rendu (un readme par exemple) avec des exemples bien choisis de génération de code et l'ensemble de vos fichiers source.
+
+**Important :** Le compte-rendu et le mail devront indiquer clairement le nom du ou des auteurs (s'il a été fait en binôme) du TP. 

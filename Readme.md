@@ -67,8 +67,8 @@ Et un exemple de code qui pourrait être produit :
 
 ```
 DATA SEGMENT
-	b DD
 	a DD
+	b DD
 	aux DD
 DATA ENDS
 CODE SEGMENT
@@ -76,34 +76,35 @@ CODE SEGMENT
 	mov a, eax
 	in eax
 	mov b, eax
-debut_while_1:
+debut_while_0:
 	mov eax, 0
 	push eax
 	mov eax, b
 	pop ebx
-	sub eax,ebx
-	jle faux_gt_1
-	mov eax,1
-	jmp sortie_gt_1
-faux_gt_1:
-	mov eax,0
-sortie_gt_1:
-	jz sortie_while_1
-	mov eax, b
-	push eax
+	sub ebx, eax
+	jl vrai_jl_1
+	mov eax, 0
+	jmp fin_jl_1
+vrai_jl_1:
+	mov eax, 1
+fin_jl_1:
+	jz fin_while_0
 	mov eax, a
+	push eax
+	mov eax, b
 	pop ebx
-	mov ecx,eax
-	div ecx,ebx
-	mul ecx,ebx
-	sub eax,ecx
+	mov ecx, eax
+	mov eax, ebx
+	div ebx, ecx
+	mul ebx, ecx
+	sub eax, ebx
 	mov aux, eax
 	mov eax, b
 	mov a, eax
 	mov eax, aux
 	mov b, eax
-	jmp debut_while_1
-sortie_while_1:
+	jmp debut_while_0
+fin_while_0:
 	mov eax, a
 	out eax
 CODE ENDS

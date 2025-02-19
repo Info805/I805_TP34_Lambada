@@ -109,7 +109,7 @@ fin_while_0:
 	out eax
 CODE ENDS
 ```
-## Exemple avec une focntion récursive
+## Exemple avec une fonction récursive
 
 PGCD avec une fonction récursive :
 
@@ -197,6 +197,48 @@ fin_if_2:
 	ret
 end_pg_4:
 CODE ENDS
+```
+
+Arbre abstrait généré (sans le calcul de type) :
+
+```
+; ──┬── LET ──┬── x
+    │         │
+    │         └── INPUT
+    │
+    └── ; ──┬── LET ──┬── y
+            │         │
+            │         └── INPUT
+            │
+            └── ; ──┬── LET ──┬── pgcd
+                    │         │
+                    │         └── LAMBDA ──┬── , ──┬── a
+                    │                      │       │
+                    │                      │       └── b
+                    │                      │
+                    │                      └── IF ──┬── < ──┬── 0
+                    │                               │       │
+                    │                               │       └── b
+                    │                               │
+                    │                               └── THEN ──┬── FCALL ──┬── pgcd
+                    │                                          │           │
+                    │                                          │           └── , ──┬── b
+                    │                                          │                   │
+                    │                                          │                   └── MOD ──┬── a
+                    │                                          │                             │
+                    │                                          │                             └── b
+                    │                                          │
+                    │                                          └── a
+                    │
+                    └── ; ──┬── LET ──┬── z
+                            │         │
+                            │         └── OUTPUT ───── FCALL ──┬── pgcd
+                            │                                  │
+                            │                                  └── , ──┬── x
+                            │                                          │
+                            │                                          └── y
+                            │
+                            └── OUTPUT ───── z
 ```
 
 Arbre abstrait généré (avec le calcul de type) :

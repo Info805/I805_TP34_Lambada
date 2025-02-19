@@ -109,6 +109,137 @@ fin_while_0:
 	out eax
 CODE ENDS
 ```
+## Exemple avec une focntion récursive
+
+PGCD avec une fonction récursive :
+
+```
+let x = input;
+let y = input;
+let pgcd = 
+  lambda (a, b) (
+    if (0 < b) then pgcd(b, a mod b) else a
+  );
+let z = output pgcd(x, y);
+output z
+.
+```
+
+Code généré :
+
+```
+DATA SEGMENT
+	x DD
+	y DD
+	pgcd DD
+	z DD
+DATA ENDS
+CODE SEGMENT
+	in eax
+	mov x, eax
+	in eax
+	mov y, eax
+	lea eax, lambda_0
+	mov pgcd, eax
+	mov eax, pgcd
+	push eax
+	mov eax, x
+	push eax
+	mov eax, y
+	push eax
+	mov eax, 8[esp]
+	call eax
+	add esp, 8
+	pop eax
+	out eax
+	mov z, eax
+	mov eax, z
+	out eax
+	jmp end_pg_4
+lambda_0:
+	enter 0
+	mov eax, 0
+	push eax
+	mov eax, 8[ebp]
+	pop ebx
+	sub ebx, eax
+	jl vrai_jl_1
+	mov eax, 0
+	jmp fin_jl_1
+vrai_jl_1:
+	mov eax, 1
+fin_jl_1:
+	jz else_2
+	mov eax, pgcd
+	push eax
+	mov eax, 8[ebp]
+	push eax
+	mov eax, 12[ebp]
+	push eax
+	mov eax, 8[ebp]
+	pop ebx
+	mov ecx, eax
+	mov eax, ebx
+	div ebx, ecx
+	mul ebx, ecx
+	sub eax, ebx
+	push eax
+	mov eax, 8[esp]
+	call eax
+	add esp, 8
+	pop eax
+	jmp fin_if_2
+else_2:
+	mov eax, 12[ebp]
+fin_if_2:
+	mov 16[ebp], eax
+	leave
+	ret
+end_pg_4:
+CODE ENDS
+```
+
+Arbre abstrait généré (avec le calcul de type) :
+
+```
+; INT ──┬── LET INT ──┬── x INT
+        │             │
+        │             └── INPUT INT
+        │
+        └── ; INT ──┬── LET INT ──┬── y INT
+                    │             │
+                    │             └── INPUT INT
+                    │
+                    └── ; INT ──┬── LET f0:(INTxINT-->INT) ──┬── pgcd f0:(INTxINT-->INT)
+                                │                            │
+                                │                            └── LAMBDA f1:(INTxINT-->INT) ──┬── , INTxINT ──┬── a[12] INT
+                                │                                                            │               │
+                                │                                                            │               └── b[8] INT
+                                │                                                            │
+                                │                                                            └── IF INT ──┬── < BOOL ──┬── 0 INT
+                                │                                                                         │            │
+                                │                                                                         │            └── b[8] INT
+                                │                                                                         │
+                                │                                                                         └── THEN INT ──┬── FCALL INT ──┬── pgcd f0:(INTxINT-->INT)
+                                │                                                                                        │               │
+                                │                                                                                        │               └── , INTxINT ──┬── b[8] INT
+                                │                                                                                        │                               │
+                                │                                                                                        │                               └── MOD INT ──┬── a[12] INT
+                                │                                                                                        │                                             │
+                                │                                                                                        │                                             └── b[8] INT
+                                │                                                                                        │
+                                │                                                                                        └── a[12] INT
+                                │
+                                └── ; INT ──┬── LET INT ──┬── z INT
+                                            │             │
+                                            │             └── OUTPUT INT ───── FCALL INT ──┬── pgcd f0:(INTxINT-->INT)
+                                            │                                              │
+                                            │                                              └── , INTxINT ──┬── x INT
+                                            │                                                              │
+                                            │                                                              └── y INT
+                                            │
+                                            └── OUTPUT INT ───── z INT
+```
 
 ## Émulateur pour la machine à pile
 
